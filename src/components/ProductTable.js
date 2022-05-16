@@ -1,31 +1,38 @@
-import React from 'react';
-import ProductCategoryRow from './ProductCategoryRow';
-import ProductRow from './ProductRow';
+import React from "react";
+import ProductCategoryRow from "./ProductCategoryRow"
+import ProductRow from "./ProductRow"
 
+function ProductTable({ products, search }) {
 
+  // searches for whaever is in our useState
+  const filteredProducts = products.filter(product => product.name === search)
+  
+  // we get partial matches 
+  //const filteredProducts = products.filter(product => product.name.includes(search)
+  const rows = [];
+  let lastCategory;
+  for (const product of filteredProducts) {
+      if (product.category !== lastCategory) {
+          rows.push(<ProductCategoryRow key={product.category} category={product.category} />)
+      }
+      rows.push(<ProductRow key={product.name} name={product.name} stocked={product.stocked} price={product.price} />)
+      lastCategory = product.category
+  }
 
-function ProductTable(){
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+      </tbody>
+    </table>
+  )
+}
 
-    return (
-        <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-          </thead>
-          <tbody>
-        <ProductCategoryRow category="Sporting Goods" />
-        <ProductRow name="Football" stocked={true} price={49.99} />
-        <ProductRow name="Baseball" stocked={true} price={9.99} />
-        <ProductRow name="Basketball" stocked={false} price={29.99} />
-        <ProductCategoryRow category="Electronics" />
-        <ProductRow name="iPod Touch" stocked={true} price={49.99} />
-        <ProductRow name="iPhone 5" stocked={false} price={9.99} />
-        <ProductRow name="Nexus 7" stocked={true} price={29.99} />
-          </tbody>
-        </table>
-      )
-    }
     
 export default ProductTable;

@@ -4,8 +4,9 @@ import React from 'react';
 function ProductCategoryRow({category}){
 
     return (
-        <tr>
-            <td> {category} </td>
+        
+        <tr style = {{ fontWeight: 'bold' }}>
+            <td colSpan="2"> {category} </td>
         </tr>
     );
 }
