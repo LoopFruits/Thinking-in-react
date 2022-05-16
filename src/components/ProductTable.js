@@ -2,11 +2,22 @@ import React from "react";
 import ProductCategoryRow from "./ProductCategoryRow"
 import ProductRow from "./ProductRow"
 
-function ProductTable({ products, search }) {
+function ProductTable({ products, search, showStocked }) {
 
-  // searches for whaever is in our useState
-  const filteredProducts = products.filter(product => product.name === search)
   
+
+  
+  const filteredProducts = products
+    .filter(product => {
+      if (showStocked) {
+        return product.stocked
+      } else {
+        return true
+      }
+    })
+    // searches for whaever is in our useState
+    .filter(product => product.name.includes(search))
+
   // we get partial matches 
   //const filteredProducts = products.filter(product => product.name.includes(search)
   const rows = [];
